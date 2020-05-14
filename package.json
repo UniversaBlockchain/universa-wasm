@@ -1,7 +1,7 @@
 {
-  "name": "universa-minicrypto",
-  "version": "2.2.5",
-  "description": "Minimalistic Javascript library required to perform basic operations with Universa smart contracts and other objects.",
+  "name": "universa-wasm",
+  "version": "0.1.0",
+  "description": "Minimalistic Javascript library required to perform basic operations with Universa smart contracts and other objects. WASM version",
   "main": "index.js",
   "types": "./types.d.ts",
   "scripts": {
@@ -16,10 +16,10 @@
   ],
   "author": "Universa Blockchain Team",
   "license": "(BSD-3-Clause OR GPL-2.0)",
-  "bugs": "https://github.com/UniversaBlockchain/minicrypto-js/issues",
+  "bugs": "https://github.com/UniversaBlockchain/universa-wasm/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/UniversaBlockchain/minicrypto-js"
+    "url": "https://github.com/UniversaBlockchain/universa-wasm"
   },
   "devDependencies": {
     "chai": "^4.2.0",

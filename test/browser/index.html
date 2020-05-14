@@ -5,17 +5,31 @@
     <title>Mocha</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="mocha.css">
-    <script src="./crypto.js"></script>
+    <!-- <script src="./crypto.js"></script>
     <script src="./universa.min.js"></script>
     <script src="./chai.js"></script>
     <script src="./mocha.js"></script>
     <script src="../seed/keys.js"></script>
     <script src="../seed/custom_salt.js"></script>
     <script src="../seed/oaep.js"></script>
-    <script src="../seed/pss.js"></script>
+    <script src="../seed/pss.js"></script> -->
+
+    <script src="./crypto.js"></script>
+    <script src="./universa.min.js"></script>
+
+    <script>
+      async function main() {
+        await Universa.isReady;
+        const options = { strength: 2048 };
+        const priv = await Universa.PrivateKey.generate(options);
+        console.log(priv);
+      }
+
+      main();
+    </script>
   </head>
   <body>
-    <div id="mocha"></div>
+    <!-- <div id="mocha"></div>
     <script>
       mocha.setup('bdd');
     </script>
@@ -27,6 +41,6 @@
     <script src="../extended_signature.js"></script>
     <script src="../signed_record.js"></script>
     <script src="../tools.js"></script>
-    <script> mocha.run(); </script>
+    <script> mocha.run(); </script> -->
   </body>
 </html>

@@ -1,0 +1,39 @@
+{
+  "name": "universa-minicrypto",
+  "version": "2.2.5",
+  "description": "Minimalistic Javascript library required to perform basic operations with Universa smart contracts and other objects.",
+  "main": "index.js",
+  "types": "./types.d.ts",
+  "scripts": {
+    "test": "mocha",
+    "coverage": "nyc npm test",
+    "build": "node ./build.js"
+  },
+  "keywords": [
+    "crypt",
+    "frontend",
+    "client"
+  ],
+  "author": "Universa Blockchain Team",
+  "license": "(BSD-3-Clause OR GPL-2.0)",
+  "bugs": "https://github.com/UniversaBlockchain/minicrypto-js/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UniversaBlockchain/minicrypto-js"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
+    "terser-webpack-plugin": "^2.3.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "buffer": "^5.4.2",
+    "fastestsmallesttextencoderdecoder": "^1.0.14",
+    "jsbn": "^1.1.0",
+    "randombytes": "^2.1.0"
+  }
+}

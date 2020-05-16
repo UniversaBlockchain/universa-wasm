@@ -1,5 +1,7 @@
 dist/universa.min.js
 dist/universa.min.js.LICENSE.txt
+dist/minicrypto.min.js
+dist/minicrypto.min.js.LICENSE.txt
 node_modules
 npm-debug.log
 .jshintrc

@@ -1,17 +1,13 @@
-var Universa = Universa || require('../index');
+var Minicrypto = Minicrypto || require('../index');
 var chai = chai || require('chai');
 var expect = chai.expect;
 
 var Module = Module || require('../src/vendor/wasm/wrapper');
 
 describe('PBKDF2', function() {
-  before((done) => {
-    Universa.isReady.then(done);
-  });
-
-  const { pbkdf2 } = Universa;
-  const { SHA } = Universa;
-  const { decode64, textToHex, hexToBytes, bytesToHex: hex } = Universa;
+  const { pbkdf2 } = Minicrypto;
+  const { SHA } = Minicrypto;
+  const { decode64, textToHex, hexToBytes, bytesToHex: hex } = Minicrypto;
 
   it('should get derived key with SHA512', async () => {
     var password = 'test';

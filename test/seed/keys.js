@@ -53,6 +53,6 @@ var keysSeed = [
 ];
 
 if (typeof window !== "undefined") {
-  Universa.seed = Universa.seed || {};
-  Universa.seed.keys = keysSeed;
+  Minicrypto.seed = Minicrypto.seed || {};
+  Minicrypto.seed.keys = keysSeed;
 } else module.exports = keysSeed;

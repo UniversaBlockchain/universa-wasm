@@ -1,4 +1,4 @@
-var Universa = Universa || require('../index');
+var Minicrypto = Minicrypto || require('../index');
 var chai = chai || require('chai');
 var expect = chai.expect;
 
@@ -11,23 +11,19 @@ describe('RSA', function() {
     encode58,
     bytesToHex: hex,
     hexToBytes
-  } = Universa;
-
-  before((done) => {
-    Universa.isReady.then(done);
-  });
+  } = Minicrypto;
 
   const {
     rsa, PrivateKey, PublicKey,
     SymmetricKey, AbstractKey
-  } = Universa;
-  const { SHA } = Universa;
+  } = Minicrypto;
+  const { SHA } = Minicrypto;
 
-  Universa.seed = Universa.seed || {};
-  const seedKeys = Universa.seed.keys || require('./seed/keys');
-  const seedOAEP = Universa.seed.oaep || require('./seed/oaep');
-  const seedPSS = Universa.seed.pss || require('./seed/pss');
-  const seedCustomSalt = Universa.seed.customSalt || require('./seed/custom_salt');
+  Minicrypto.seed = Minicrypto.seed || {};
+  const seedKeys = Minicrypto.seed.keys || require('./seed/keys');
+  const seedOAEP = Minicrypto.seed.oaep || require('./seed/oaep');
+  const seedPSS = Minicrypto.seed.pss || require('./seed/pss');
+  const seedCustomSalt = Minicrypto.seed.customSalt || require('./seed/custom_salt');
 
   function fp(key) {
     return encode64(key.fingerprint);

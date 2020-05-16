@@ -1,4 +1,4 @@
-var Universa = Universa || require('../index');
+var Minicrypto = Minicrypto || require('../index');
 var chai = chai || require('chai');
 var expect = chai.expect;
 
@@ -17,13 +17,9 @@ describe('Tools', function() {
     textToBytes,
     bytesToText,
     bytesToHex
-  } = Universa;
+  } = Minicrypto;
 
-  before((done) => {
-    Universa.isReady.then(done);
-  });
-
-  const { randomByteString } = Universa.bytes;
+  const { randomByteString } = Minicrypto.bytes;
 
   it('should convert text to bytes', () => {
     const msg = "life happens, дерьмо случается";

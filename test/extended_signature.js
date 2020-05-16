@@ -1,20 +1,16 @@
-var Universa = Universa || require('../index');
+var Minicrypto = Minicrypto || require('../index');
 var chai = chai || require('chai');
 var expect = chai.expect;
 
 var Module = Module || require('../src/vendor/wasm/wrapper');
 
 describe('Extended signature', function() {
-  Universa.seed = Universa.seed || {};
-  var seedKeys = Universa.seed.keys || require('./seed/keys');
+  Minicrypto.seed = Minicrypto.seed || {};
+  var seedKeys = Minicrypto.seed.keys || require('./seed/keys');
 
-  const { PrivateKey, ExtendedSignature } = Universa;
-  const { bytesToHex: hex, decode64, hexToBytes, textToHex } = Universa;
+  const { PrivateKey, ExtendedSignature } = Minicrypto;
+  const { bytesToHex: hex, decode64, hexToBytes, textToHex } = Minicrypto;
   const { keyId, extractKeyId, extractPublicKey } = ExtendedSignature;
-
-  before((done) => {
-    Universa.isReady.then(done);
-  });
 
   it('should get key id', async () => {
     const key = await PrivateKey.unpack(decode64(seedKeys[1]));

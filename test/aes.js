@@ -1,4 +1,4 @@
-var Universa = Universa || require('../index');
+var Minicrypto = Minicrypto || require('../index');
 var chai = chai || require('chai');
 var expect = chai.expect;
 
@@ -12,15 +12,11 @@ describe('AES', function() {
     textToBytes,
     randomBytes,
     byteStringToArray
-  } = Universa;
+  } = Minicrypto;
 
   const key = hexToBytes('000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f');
   const message = hexToBytes('00112233445566778899aabbccddeeff');
   const encrypted = hexToBytes('8ea2b7ca516745bfeafc49904b496089');
-
-  before((done) => {
-    Universa.isReady.then(done);
-  });
 
   describe('AES 256', function() {
     it('should encrypt data with key', function() {

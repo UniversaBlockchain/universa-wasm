@@ -155,6 +155,8 @@ module.exports = class PublicKey extends AbstractKey {
   static async unpackBOSS(options) {
     const self = this;
 
+    await Module.isReady;
+
     return new Promise(resolve => {
       Module.PublicKeyImpl.initFromPackedBinary(options, resolve);
     });
@@ -162,6 +164,37 @@ module.exports = class PublicKey extends AbstractKey {
 
   static fromPrivate(key) {
     return new PublicKey(new Module.PublicKeyImpl(key));
+  }
+
+  static isValidAddress(address) {
+    var decoded;
+
+    try {
+      decoded = decode58(address);
+    } catch (err) { decoded = address; }
+
+    if ([37, 53].indexOf(decoded.length) == -1) return false;
+    if ([16, 32].indexOf(decoded[0]) == -1) return false;
+
+    var shaLength = 48;
+    if (decoded.length == 37) shaLength = 32;
+
+    var hashed = decoded.slice(0, 1 + shaLength);
+
+    var checksum = crc32(hashed);
+
+    if (checksum.length < 4) {
+      var buf = new Uint8Array(new ArrayBuffer(4));
+      buf.set(checksum, 4 - checksum.length);
+      checksum = buf;
+    }
+
+    var decodedLength = decoded.length;
+    var decodedPart = decoded.slice(decodedLength - 4, decodedLength);
+
+    var isValid = encode58(checksum.slice(0, 4)) == encode58(new Uint8Array(decodedPart));
+
+    return isValid;
   }
 }
 
@@ -314,36 +347,6 @@ module.exports = class PublicKey extends AbstractKey {
 //   shortAddress() { return this.address(); }
 //   longAddress() { return this.address({ long: true }); }
 
-  static isValidAddress(address) {
-    var decoded;
-
-    try {
-      decoded = decode58(address);
-    } catch (err) { decoded = address; }
-
-    if ([37, 53].indexOf(decoded.length) == -1) return false;
-    if ([16, 32].indexOf(decoded[0]) == -1) return false;
-
-    var shaLength = 48;
-    if (decoded.length == 37) shaLength = 32;
-
-    var hashed = decoded.slice(0, 1 + shaLength);
-
-    var checksum = crc32(hashed);
-
-    if (checksum.length < 4) {
-      var buf = new Uint8Array(new ArrayBuffer(4));
-      buf.set(checksum, 4 - checksum.length);
-      checksum = buf;
-    }
-
-    var decodedLength = decoded.length;
-    var decodedPart = decoded.slice(decodedLength - 4, decodedLength);
-
-    var isValid = encode58(checksum.slice(0, 4)) == encode58(new Uint8Array(decodedPart));
-
-    return isValid;
-  }
 
 //   static unpack(bytes) { return new PublicKey("BOSS", bytes); }
 // }

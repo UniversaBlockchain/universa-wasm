@@ -1,5 +1,5 @@
-var Universa = Universa || require('../../index');
-var { hexToBytes, BigInteger } = Universa;
+var Minicrypto = Minicrypto || require('../../index');
+var { hexToBytes, BigInteger } = Minicrypto;
 var i = (hex) => new BigInteger(hex, 16);
 
 var pssSeed = {
@@ -13,7 +13,7 @@ var pssSeed = {
 };
 
 if (typeof window !== "undefined") {
-  Universa.seed = Universa.seed || {};
-  Universa.seed.pss = pssSeed;
+  Minicrypto.seed = Minicrypto.seed || {};
+  Minicrypto.seed.pss = pssSeed;
 } else module.exports = pssSeed;
 

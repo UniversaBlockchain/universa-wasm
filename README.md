@@ -27,12 +27,10 @@ $ yarn add universa-wasm
 ```
 
 
-And use it with the following line wherever you need it. Please, wait for initialization before usage:
+And use it with the following line wherever you need it.
 
 ```javascript
-const Universa = require('universa-minicrypto');
-
-await Universa.isReady;
+const Minicrypto = require('universa-minicrypto');
 ```
 
 ### Web
@@ -44,21 +42,19 @@ npm install
 npm run build
 ```
 
-In folder `dist` there will be `universa.min.js`, `crypto.js`, `crypto.wasm`. Also there will be \*.LICENSE files.
+In folder `dist` there will be `minicrypto.min.js`, `crypto.js`, `crypto.wasm`. Also there will be \*.LICENSE files.
 
 Copy files to your scripts folder and set them in order. Also, wait for initalization:
 
 ```html
 <script src="path/to/crypto.js"></script>
-<script src="path/to/universa.min.js"></script>
+<script src="path/to/minicrypto.min.js"></script>
 
 <script>
   async function main() {
-    await Universa.isReady;
-
     // Example of key generation
     const options = { strength: 2048 };
-    const priv = await Universa.PrivateKey.generate(options);
+    const priv = await Minicrypto.PrivateKey.generate(options);
     console.log(priv);
   }
 
@@ -73,7 +69,7 @@ Copy files to your scripts folder and set them in order. Also, wait for initaliz
 Pack data to signed record (Uint8Array) with key:
 
 ```js
-const { SignedRecord, decode64, PrivateKey } = Universa;
+const { SignedRecord, decode64, PrivateKey } = Minicrypto;
 
 const payload = { ab: "cd" };
 const nonce = decode64("abc");
@@ -85,7 +81,7 @@ const recordBinary = await SignedRecord.packWithKey(key, payload, nonce); // Uin
 Unpack signed record:
 
 ```js
-const { SignedRecord, decode64, PrivateKey } = Universa;
+const { SignedRecord, decode64, PrivateKey } = Minicrypto;
 
 const payload = { ab: "cd" };
 const nonce = decode64("abc");
@@ -106,21 +102,21 @@ record.key // PublicKey
 Random byte array for given length
 
 ```js
-const { randomBytes } = Universa;
+const { randomBytes } = Minicrypto;
 const bytes16 = randomBytes(16); // Uint8Array
 ```
 
 HashId for binary data
 
 ```js
-const { hashId } = Universa;
+const { hashId } = Minicrypto;
 const id = await hashId(decode64("abc")); // Uint8Array
 ```
 
 CRC32
 
 ```js
-const { crc32 } = Universa;
+const { crc32 } = Minicrypto;
 const digest = crc32(decode64("abc")); // Uint8Array
 ```
 
@@ -129,7 +125,7 @@ const digest = crc32(decode64("abc")); // Uint8Array
 Convert byte array to hex string and back
 
 ```js
-    const { bytesToHex, hexToBytes } = Universa;
+    const { bytesToHex, hexToBytes } = Minicrypto;
     const hexString = bytesToHex(uint8arr);  // String
     const bytesArray = hexToBytes(hexString); // Uint8Array
 ```
@@ -137,7 +133,7 @@ Convert byte array to hex string and back
 Convert plain text to bytes and back
 
 ```js
-  const { textToBytes, bytesToText } = Universa;
+  const { textToBytes, bytesToText } = Minicrypto;
   const bytes = textToBytes("one two three"); // Uint8Array
   const text = bytesToText(bytes); // "one two three"
 ```
@@ -145,7 +141,7 @@ Convert plain text to bytes and back
 Convert bytes to base64 and back
 
 ```js
-const { encode64, encode64Short, decode64 } = Universa;
+const { encode64, encode64Short, decode64 } = Minicrypto;
 const bytes = decode64("abc"); // Uint8Array
 const base64str = encode64(bytes); // String
 
@@ -156,7 +152,7 @@ const base64ShortString = encode64Short(bytes);
 Convert bytes to base58 and back
 
 ```js
-const { encode58, decode58 } = Universa;
+const { encode58, decode58 } = Minicrypto;
 const bytes = decode58("abc"); // Uint8Array
 const base58str = encode58(bytes); // String
 ```
@@ -168,7 +164,7 @@ Supports SHA256, SHA512, SHA1, SHA3(256, 384, 512)
 Get instant hash value for given byte array
 
 ```js
-const { SHA } = Universa;
+const { SHA } = Minicrypto;
 
 // sha3 identifiers: "3_256", "3_384", "3_512"
 const sha256 = new SHA(256);
@@ -179,7 +175,7 @@ const resultBytes = await sha256.get(textToBytes('somevalue')); // Uint8Array
 Get hash value for large data
 
 ```js
-const { SHA } = Universa;
+const { SHA } = Minicrypto;
 const sha512 = new SHA(512);
 
 sha512.put(dataPart1); // dataPart1 is Uint8Array
@@ -193,7 +189,7 @@ const resultBytes = await sha512.get(); // Uint8Array
 Get hash value in HEX
 
 ```js
-const { SHA } = Universa;
+const { SHA } = Minicrypto;
 const sha256 = new SHA(256);
 const hexResult = await sha256.get(textToBytes("one two three"), 'hex'); // String
 ```
@@ -201,7 +197,7 @@ const hexResult = await sha256.get(textToBytes("one two three"), 'hex'); // Stri
 ### HMAC
 
 ```js
-const { SHA, HMAC } = Universa;
+const { SHA, HMAC } = Minicrypto;
 const data = textToBytes('a quick brown for his done something disgusting');
 const key = textToBytes('1234567890abcdef1234567890abcdef');
 
@@ -212,7 +208,7 @@ const result = await hmac.get(data) // Uint8Array
 ### PBKDF2
 
 ```js
-const { hexToBytes, pbkdf2, SHA } = Universa;
+const { hexToBytes, pbkdf2, SHA } = Minicrypto;
 
 const derivedKey = await pbkdf2('sha256', {
   rounds: 1, // number of iterations
@@ -227,7 +223,7 @@ const derivedKey = await pbkdf2('sha256', {
 Private key unpack
 
 ```js
-const { PrivateKey, decode64, BigInteger } = Universa;
+const { PrivateKey, decode64, BigInteger } = Minicrypto;
 
 const bossEncodedKey = decode64(keyPacked64);
 
@@ -243,7 +239,7 @@ const privateKey4 = await PrivateKey.unpack({
 Public key unpack
 
 ```js
-const { PublicKey, PrivateKey, decode64, BigInteger } = Universa;
+const { PublicKey, PrivateKey, decode64, BigInteger } = Minicrypto;
 
 const bossEncodedKey = decode64(keyPacked64);
 const privateKey1 = await PrivateKey.unpack(bossEncodedKey);
@@ -276,7 +272,7 @@ publicKey.longAddress58;  // long address (base58)
 Check if given address is valid
 
 ```js
-const { PublicKey } = Universa;
+const { PublicKey } = Minicrypto;
 
 PublicKey.isValidAddress(publicKey.shortAddress) // true
 
@@ -288,7 +284,7 @@ PublicKey.isValidAddress(publicKey.shortAddress58) // true
 Generate private key
 
 ```js
-const { PrivateKey } = Universa;
+const { PrivateKey } = Minicrypto;
 
 const options = { strength: 2048 };
 const priv = await PrivateKey.generate(options); // instance of PrivateKey
@@ -297,7 +293,7 @@ const priv = await PrivateKey.generate(options); // instance of PrivateKey
 Private(public) key - export
 
 ```js
-const { PrivateKey } = Universa;
+const { PrivateKey } = Minicrypto;
 const bossEncodedKey = decode64(keyPacked64);
 
 const key = await PrivateKey.unpack(bossEncodedKey);
@@ -316,7 +312,7 @@ AbstractKey.TYPE_PRIVATE_PASSWORD_V2 - binary package of private key with passwo
 AbstractKey.TYPE_PRIVATE_PASSWORD_V1 - binary package of private key with password (deprecated version)
 
 ```js
-const { AbstractKey } = Universa;
+const { AbstractKey } = Minicrypto;
 
 const bossEncoded = await privateKey.pack("somepassword");
 
@@ -332,7 +328,7 @@ Supported algorithms: RSAPublic, RSAPrivate, AES256
 Supported PRF: HMAC_SHA1, HMAC_SHA256, HMAC_SHA512
 
 ```js
-const { KeyInfo} = Universa;
+const { KeyInfo} = Minicrypto;
 const keyInfo = new KeyInfo({
   algorithm: KeyInfo.Algorithm.AES256,
   tag: decode64("abc"), // Uint8Array
@@ -464,7 +460,7 @@ console.log(isCorrect); // true
 Sign/verify
 
 ```js
-const { ExtendedSignature } = Universa;
+const { ExtendedSignature } = Minicrypto;
 const data = decode64("abcde12345");
 const privateKey; // some PrivateKey instance
 const publicKey = privateKey.publicKey;
@@ -483,7 +479,7 @@ console.log(ExtendedSignature.extractPublicKey(signature)); // PublicKey instanc
 Encode/decode
 
 ```js
-const { Boss } = Universa;
+const { Boss } = Minicrypto;
 const boss = new Boss();
 
 const data = {
@@ -527,7 +523,7 @@ const arg5 = reader.read(); // undefined
 Encrypt/decrypt
 
 ```js
-const { AES } = Universa;
+const { AES } = Minicrypto;
 const key = decode64("abc"); // 16 bytes for aes128, 32 bytes for aes256
 const message = textToBytes('some text');
 

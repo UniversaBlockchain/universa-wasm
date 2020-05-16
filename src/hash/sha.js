@@ -1,4 +1,5 @@
 var Module = Module || require('../vendor/wasm/wrapper');
+const { WASMEngineMixin } = require('../helpers');
 
 const { bytesToHex } = require('../utils/bytes');
 
@@ -69,6 +70,8 @@ class SHA {
 
   static wasmType(stringType) { return SHA.StringTypes[stringType.toLowerCase()]; }
 }
+
+Object.assign(SHA, WASMEngineMixin);
 
 SHA.StringTypes = StringTypes;
 

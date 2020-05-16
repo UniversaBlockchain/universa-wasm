@@ -1,5 +1,5 @@
-var Universa = Universa || require('../../index');
-var { hexToBytes, bytesToHex, BigInteger } = Universa;
+var Minicrypto = Minicrypto || require('../../index');
+var { hexToBytes, bytesToHex, BigInteger } = Minicrypto;
 var i = (hex) => new BigInteger(hex, 16);
 
 var oaepSeed = {
@@ -38,6 +38,6 @@ function calcD() {
 }
 
 if (typeof window !== "undefined") {
-  Universa.seed = Universa.seed || {};
-  Universa.seed.oaep = oaepSeed;
+  Minicrypto.seed = Minicrypto.seed || {};
+  Minicrypto.seed.oaep = oaepSeed;
 } else module.exports = oaepSeed;

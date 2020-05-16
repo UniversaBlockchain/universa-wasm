@@ -1,6 +1,6 @@
 const fs = require('fs');
 const webpack = require('webpack');
-const universaConfig = require('./webpack.universa');
+const cryptoConfig = require('./webpack.minicrypto');
 
 function rewriteWASM() {
   return new Promise((resolve, reject) => {
@@ -28,7 +28,7 @@ function build(config) {
   });
 }
 
-build(universaConfig)
+build(cryptoConfig)
   // .then(rewriteWASM)
   .then(
     () => console.log("Done without errors."),

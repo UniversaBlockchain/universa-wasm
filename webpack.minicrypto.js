@@ -5,9 +5,9 @@ module.exports = [
     entry: ['./index.js'],
     output: {
       globalObject: 'this',
-      filename: 'universa.min.js',
+      filename: 'minicrypto.min.js',
       path: __dirname + '/dist',
-      library: 'Universa',
+      library: 'Minicrypto',
       libraryTarget: 'umd'
     },
     mode: 'production',

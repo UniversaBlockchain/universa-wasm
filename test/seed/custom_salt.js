@@ -1,5 +1,5 @@
-var Universa = Universa || require('../../index');
-var { hexToBytes, BigInteger } = Universa;
+var Minicrypto = Minicrypto || require('../../index');
+var { hexToBytes, BigInteger } = Minicrypto;
 var i = (hex) => new BigInteger(hex, 16);
 
 var customSaltSeed = {
@@ -13,6 +13,6 @@ var customSaltSeed = {
 };
 
 if (typeof window !== "undefined") {
-  Universa.seed = Universa.seed || {};
-  Universa.seed.customSalt = customSaltSeed;
+  Minicrypto.seed = Minicrypto.seed || {};
+  Minicrypto.seed.customSalt = customSaltSeed;
 } else module.exports = customSaltSeed;

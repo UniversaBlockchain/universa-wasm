@@ -23,6 +23,8 @@ async function derive(hashStringType, options) {
   const self = this;
   const hashType = SHA.StringTypes[hashStringType];
 
+  await Module.isReady;
+
   return new Promise((resolve, reject) => {
     const { password, salt, keyLength, rounds } = options;
     const cb = (result) => resolve(new Uint8Array(result));

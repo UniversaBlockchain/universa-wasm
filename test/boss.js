@@ -1,11 +1,11 @@
-var Universa = Universa || require('../index');
+var Minicrypto = Minicrypto || require('../index');
 var chai = chai || require('chai');
 var expect = chai.expect;
 
 describe('BOSS Protocol', function() {
   var boss;
 
-  const { Boss } = Universa;
+  const { Boss } = Minicrypto;
 
   const vectors = [
     ['8', 7],
@@ -21,7 +21,7 @@ describe('BOSS Protocol', function() {
     arrayToByteString,
     byteStringToArray,
     decode64
-  } = Universa;
+  } = Minicrypto;
 
   beforeEach(function() {
     boss = new Boss();

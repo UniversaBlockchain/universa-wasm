@@ -1,4 +1,5 @@
 var Module = Module || require('../vendor/wasm/wrapper');
+const { WASMEngineMixin } = require('../helpers');
 
 const SHA = require('./SHA');
 
@@ -24,5 +25,7 @@ class HMAC {
     });
   }
 }
+
+Object.assign(HMAC, WASMEngineMixin);
 
 module.exports = HMAC;

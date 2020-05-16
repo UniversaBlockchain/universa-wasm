@@ -1,4 +1,4 @@
-declare module 'universa-minicrypto' {
+declare module 'universa-wasm' {
   export function encode64(data: Uint8Array): string;
   export function encode64Short(data: Uint8Array): string;
   export function decode64(encoded: string): Uint8Array;
@@ -87,6 +87,7 @@ declare module 'universa-minicrypto' {
     decrypt(data: Uint8Array, options?: PublicKeyEncryptOpts): Promise<Uint8Array>;
 
     static unpack(packed: Uint8Array, password?: string): Promise<PrivateKey>;
+    static generate(CreateKeysOpts): Promise<PrivateKey>;
   }
 
   export interface PublicKeyEncryptOpts {

@@ -1,6 +1,4 @@
 var Module = Module || require('../vendor/wasm/wrapper');
-const { WASMEngineMixin } = require('../helpers');
-
 const { bytesToHex } = require('../utils/bytes');
 
 const StringTypes = {
@@ -14,36 +12,36 @@ const StringTypes = {
 
 class SHA {
   constructor(hashType) {
-    this.hash = new Module.DigestImpl(StringTypes[`sha${hashType}`] || hashType);
+    this.hash = SHA.init(hashType);
     this.empty = true;
   }
 
-  delete() {
-    this.hash.delete();
+  async delete() {
+    (await this.hash).delete();
   }
 
-  update(data) {
+  async update(data) {
     this.empty = false;
-    this.hash.update(data);
+    (await this.hash).update(data);
   }
 
-  put(data) {
+  async put(data) {
     this.update(data);
   }
 
-  doFinal() {
-    this.hash.doFinal();
+  async doFinal() {
+    (await this.hash).doFinal();
   }
 
-  getDigestSize() {
-    return this.hash.getDigestSize();
+  async getDigestSize() {
+    return (await this.hash).getDigestSize();
   }
 
   async getDigest(encoding) {
-    const self = this;
+    const hash = await this.hash;
 
     return new Promise((resolve, reject) => {
-      self.hash.getDigest(res => {
+      hash.getDigest(res => {
         const bytes = new Uint8Array(res);
 
         if (encoding === 'hex') resolve(bytesToHex(bytes));
@@ -53,25 +51,50 @@ class SHA {
   }
 
   async get(data, encoding) {
-    if (typeof data !== 'string' || this.empty) this.update(data);
+    if (typeof data !== 'string' || this.empty) await this.update(data);
     else encoding = data;
 
     // if (data) this.update(data);
 
-    this.doFinal();
+    await this.doFinal();
     return this.getDigest(encoding);
   }
 
-  static hashId(data) {
+  static async hashId(data) {
+    await Module.isReady;
+
     return new Promise(resolve => {
       Module.calcHashId(data, res => resolve(new Uint8Array(res)));
     });
   }
 
-  static wasmType(stringType) { return SHA.StringTypes[stringType.toLowerCase()]; }
-}
+  static wasmType(stringType) {
+    if (typeof stringType !== 'string') return false;
 
-Object.assign(SHA, WASMEngineMixin);
+    const lower = stringType.toLowerCase();
+    let tpe = SHA.StringTypes[lower];
+    if (typeof tpe !== 'number') tpe = SHA.StringTypes[`sha${lower}`];
+
+    if (typeof tpe !== 'number') return false;
+
+    return tpe;
+  }
+
+  static async init(hashType) {
+    await Module.isReady;
+
+    const wasmTpe = SHA.wasmType(hashType);
+    const tpe = typeof wasmTpe === 'number' ? wasmTpe : hashType;
+
+    return new Module.DigestImpl(tpe);
+  }
+
+  static async getDigest(hashType, data) {
+    const sha = new SHA(hashType);
+
+    return sha.get(data);
+  }
+}
 
 SHA.StringTypes = StringTypes;
 

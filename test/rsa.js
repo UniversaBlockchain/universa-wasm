@@ -112,9 +112,7 @@ describe('RSA', function() {
 
       const pub = await PublicKey.unpack(decode64("HggMEbyAu/gvCQaCzpwjOKwrnahx9zaNB+7UEEOkQNa28HRU9R+437qvA1wCq2HqSM7rb81Idu1SDWDh7EYZcZ2KW4uAf6+44KPfxzdyPua0t9k6JYTuamSdBglTdIg0skVFmDlO4KqxLXthpR9SeppB9sFof+JTcpjKKo9ZRvjl/Qkdvcs="));
 
-      // console.log(pub.shortAddress58);
-
-      expect(pub.encryptionMaxLength(oaepOpts)).to.equal(86);
+      expect(await pub.encryptionMaxLength(oaepOpts)).to.equal(86);
     });
 
     it('should return encryption max length with string opts', async () => {
@@ -126,7 +124,7 @@ describe('RSA', function() {
 
       const pub = await PublicKey.unpack(decode64("HggMEbyAu/gvCQaCzpwjOKwrnahx9zaNB+7UEEOkQNa28HRU9R+437qvA1wCq2HqSM7rb81Idu1SDWDh7EYZcZ2KW4uAf6+44KPfxzdyPua0t9k6JYTuamSdBglTdIg0skVFmDlO4KqxLXthpR9SeppB9sFof+JTcpjKKo9ZRvjl/Qkdvcs="));
 
-      expect(pub.encryptionMaxLength(oaepOpts)).to.equal(86);
+      expect(await pub.encryptionMaxLength(oaepOpts)).to.equal(86);
     });
 
     // need new key

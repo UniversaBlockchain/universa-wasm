@@ -125,11 +125,11 @@ module.exports = class PublicKey extends AbstractKey {
     });
   }
 
-  encryptionMaxLength(options) {
+  async encryptionMaxLength(options) {
     const mdHashType = options.pssHash || options.oaepHash || 'sha1';
-    const md = new SHA(SHA.StringTypes[mdHashType]);
+    const md = new SHA(mdHashType);
     const keyLength = this.getBitStrength() / 8;
-    const maxLength = keyLength - 2 * md.getDigestSize() - 2;
+    const maxLength = keyLength - 2 * (await md.getDigestSize()) - 2;
 
     return maxLength;
   }

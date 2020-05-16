@@ -166,10 +166,7 @@ Get instant hash value for given byte array
 ```js
 const { SHA } = Minicrypto;
 
-// sha3 identifiers: "3_256", "3_384", "3_512"
-const sha256 = new SHA(256);
-
-const resultBytes = await sha256.get(textToBytes('somevalue')); // Uint8Array
+const resultBytes1 = await SHA.getDigest('sha256', textToBytes('somevalue')); // Uint8Array
 ```
 
 Get hash value for large data
@@ -178,10 +175,10 @@ Get hash value for large data
 const { SHA } = Minicrypto;
 const sha512 = new SHA(512);
 
-sha512.put(dataPart1); // dataPart1 is Uint8Array
-sha512.put(dataPart2);
+await sha512.put(dataPart1); // dataPart1 is Uint8Array
+await sha512.put(dataPart2);
 // .....
-sha512.put(dataPartFinal);
+await sha512.put(dataPartFinal);
 
 const resultBytes = await sha512.get(); // Uint8Array
 ```

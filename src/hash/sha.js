@@ -12,8 +12,16 @@ const StringTypes = {
 
 class SHA {
   constructor(hashType) {
-    this.hash = SHA.init(hashType);
+    this.hashType = hashType;
+    const wasmTpe = SHA.wasmType(hashType);
+    const tpe = typeof wasmTpe === 'number' ? wasmTpe : hashType;
+    this.wasmType = tpe;
+    this.hash = SHA.init(this.wasmType);
     this.empty = true;
+  }
+
+  getSync() {
+    return new Module.DigestImpl(this.wasmType);
   }
 
   async delete() {
@@ -33,8 +41,8 @@ class SHA {
     (await this.hash).doFinal();
   }
 
-  async getDigestSize() {
-    return (await this.hash).getDigestSize();
+  getDigestSize() {
+    return (this.getSync()).getDigestSize();
   }
 
   async getDigest(encoding) {
@@ -80,13 +88,10 @@ class SHA {
     return tpe;
   }
 
-  static async init(hashType) {
+  static async init(wasmType) {
     await Module.isReady;
 
-    const wasmTpe = SHA.wasmType(hashType);
-    const tpe = typeof wasmTpe === 'number' ? wasmTpe : hashType;
-
-    return new Module.DigestImpl(tpe);
+    return new Module.DigestImpl(wasmType);
   }
 
   static async getDigest(hashType, data) {

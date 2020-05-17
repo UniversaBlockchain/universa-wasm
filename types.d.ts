@@ -112,7 +112,7 @@ declare module 'universa-wasm' {
     readonly fingerprint: Uint8Array;
 
     getBitStrength(): number;
-    encryptionMaxLength(options?: PublicKeyEncryptOpts): Promise<number>;
+    encryptionMaxLength(options?: PublicKeyEncryptOpts): number;
     pack(mode: string): Promise<Uint8Array>;
     verify(
       message: Uint8Array,

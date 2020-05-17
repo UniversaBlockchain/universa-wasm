@@ -362,6 +362,60 @@ Derived key from password
 const derivedKey = await keyInfo.derivePassword("somepassword"); // Uint8Array
 ```
 
+### SYMMETRIC KEY
+
+Symmetric key: main interface to the symmetric cipher.
+This implementation uses AES256 in CTR mode with IV to encrypt / decrypt.
+
+```js
+const { SymmetricKey } = Universa;
+
+// Creates random key (AES256, CTR)
+const symmetricKey = new SymmetricKey();
+
+// Creates key by derived key (Uint8Array) and it's info (KeyInfo)
+const symmetricKey2 = new SymmetricKey({
+  keyBytes: derivedKey,
+  keyInfo: keyInfo
+});
+
+// Creates key by derived key (Uint8Array)
+const symmetricKey2 = new SymmetricKey({
+  keyBytes: derivedKey
+});
+
+// Creates key by password (String) and number of rounds (Int). Salt is optional
+// Uint8Array, null by default
+const symmetricKey3 = await SymmetricKey.fromPassword(password, rounds, salt);
+```
+
+Pack symmetric key (get derived key bytes)
+
+```js
+const { SymmetricKey } = Universa;
+
+// Creates random key (AES256, CTR)
+const symmetricKey = new SymmetricKey();
+
+const derivedKey = symmetricKey.pack(); // Uint8Array
+```
+
+Encrypt / decrypt data with AES256 in CRT mode with IV
+
+```js
+// data is Uint8Array
+const encrypted = symmetricKey.encrypt(data); // Uint8Array
+const decrypted = symmetricKey.decrypt(encrypted); // Uint8Array
+```
+
+Encrypt / decrypt data with EtA using Sha256-based HMAC
+
+```js
+// data is Uint8Array
+const encrypted = await symmetricKey.etaEncrypt(data); // Uint8Array
+const decrypted = await symmetricKey.etaDecrypt(encrypted); // Uint8Array
+```
+
 ### RSA OAEP/PSS
 
 

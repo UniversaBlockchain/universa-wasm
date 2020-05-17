@@ -16,6 +16,8 @@ class HMAC {
   async get(data) {
     const self = this;
 
+    await Module.isReady;
+
     return new Promise((resolve, reject) => {
       Module.calcHmac(self.hashType, self.key, data, res => {
         resolve(new Uint8Array(res));

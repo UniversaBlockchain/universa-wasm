@@ -204,7 +204,7 @@ declare module 'universa-wasm' {
 
     pack(): Uint8Array;
     matchType(other: KeyInfo): boolean;
-    derivePassword(password: string): Uint8Array;
+    derivePassword(password: string): Promise<Uint8Array>;
 
     static unpack(packed: Uint8Array): KeyInfo;
   }
@@ -220,10 +220,10 @@ declare module 'universa-wasm' {
     pack(): Uint8Array;
     encrypt(data: Uint8Array): Uint8Array;
     decrypt(data: Uint8Array): Uint8Array;
-    etaEncrypt(data: Uint8Array): Uint8Array;
-    etaDecrypt(data: Uint8Array): Uint8Array;
+    etaEncrypt(data: Uint8Array): Promise<Uint8Array>;
+    etaDecrypt(data: Uint8Array): Promise<Uint8Array>;
 
-    static fromPassword(password: string, rounds: number, salt?: Uint8Array): SymmetricKey;
+    static fromPassword(password: string, rounds: number, salt?: Uint8Array): Promise<SymmetricKey>;
   }
 
   export class AES {

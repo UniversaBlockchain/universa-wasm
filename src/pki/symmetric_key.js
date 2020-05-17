@@ -27,7 +27,7 @@ class SymmetricKey {
     });
   }
 
-  static fromPassword(password, rounds, salt = null) {
+  static async fromPassword(password, rounds, salt = null) {
     const ki = new KeyInfo({
       algorithm: KeyInfo.PRF.HMAC_SHA256,
       rounds,
@@ -37,7 +37,7 @@ class SymmetricKey {
     });
 
     return new SymmetricKey({
-      keyBytes: ki.derivePassword(password),
+      keyBytes: await ki.derivePassword(password),
       keyInfo: ki
     });
   }
@@ -66,11 +66,11 @@ class SymmetricKey {
     return concatBytes(iv, transformer.transform(data));
   }
 
-  etaDecrypt(encrypted) {
+  async etaDecrypt(encrypted) {
     const encryptedLength = encrypted.length;
-    const hmac = new HMAC(new SHA(256), this.keyBytes);
+    const hmac = new HMAC('sha256', this.keyBytes);
     const transformed = encrypted.slice(IVSize, encryptedLength - 32);
-    const hmacCalculated = hmac.get(transformed);
+    const hmacCalculated = await hmac.get(transformed);
     const hmacGiven = encrypted.slice(encryptedLength - 32, encryptedLength);
     if (encode64(hmacCalculated) !== encode64(hmacGiven))
       throw new Error("hmac digest doesn't match");
@@ -78,10 +78,10 @@ class SymmetricKey {
     return this.decrypt(encrypted.slice(0, encryptedLength - 32));
   }
 
-  etaEncrypt(data) {
-    const hmac = new HMAC(new SHA(256), this.keyBytes);
+  async etaEncrypt(data) {
+    const hmac = new HMAC('sha256', this.keyBytes);
     const encrypted = this.encrypt(data);
-    const hmacDigest = hmac.get(encrypted.slice(IVSize, encrypted.length));
+    const hmacDigest = await hmac.get(encrypted.slice(IVSize, encrypted.length));
 
     return concatBytes(encrypted, hmacDigest);
   }

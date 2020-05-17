@@ -354,7 +354,7 @@ describe('RSA', function() {
   });
 
   describe('Symmetric key', function() {
-    it.skip('should create random symmetric key', function() {
+    it('should create random symmetric key', async() => {
       const symmetricKey = new SymmetricKey();
 
       const encrypted = symmetricKey.encrypt(seedPSS.message);
@@ -362,13 +362,13 @@ describe('RSA', function() {
 
       expect(hex(seedPSS.message)).to.equal(hex(decrypted));
 
-      const encrypted2 = symmetricKey.etaEncrypt(seedPSS.message);
-      const decrypted2 = symmetricKey.etaDecrypt(encrypted2);
+      const encrypted2 = await symmetricKey.etaEncrypt(seedPSS.message);
+      const decrypted2 = await symmetricKey.etaDecrypt(encrypted2);
 
       expect(hex(seedPSS.message)).to.equal(hex(decrypted2));
     });
 
-    it.skip('should pack key as is', function() {
+    it('should pack key as is', async() => {
       const keyBytes = decode64("/bbMv7MMsbsWSi4Abujd/1nije6QADJeuqxAKyCg+gY=");
       const symmetricKey = new SymmetricKey({ keyBytes });
 
@@ -377,8 +377,8 @@ describe('RSA', function() {
 
       expect(hex(seedPSS.message)).to.equal(hex(decrypted));
 
-      const encrypted2 = symmetricKey.etaEncrypt(seedPSS.message);
-      const decrypted2 = symmetricKey.etaDecrypt(encrypted2);
+      const encrypted2 = await symmetricKey.etaEncrypt(seedPSS.message);
+      const decrypted2 = await symmetricKey.etaDecrypt(encrypted2);
 
       expect(hex(seedPSS.message)).to.equal(hex(decrypted2));
       expect(encode64(symmetricKey.pack())).to.equal(encode64(keyBytes));

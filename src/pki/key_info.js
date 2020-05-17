@@ -94,7 +94,7 @@ class KeyInfo {
     return `${this.algorithm}, tag=${tagString} kLength=${this.keyLength}`;
   }
 
-  derivePassword(password) {
+  async derivePassword(password) {
     if (!this.isPassword()) throw new Error("KeyInfo: not the PRF keyInfo");
     var md;
 

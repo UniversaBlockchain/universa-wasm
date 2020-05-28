@@ -1,5 +1,5 @@
 var Module = Module || require('../vendor/wasm/wrapper');
-const SHA = require('./SHA');
+const SHA = require('./sha');
 
 class HMAC {
   /**

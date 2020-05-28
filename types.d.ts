@@ -87,7 +87,7 @@ declare module 'universa-wasm' {
     decrypt(data: Uint8Array, options?: PublicKeyEncryptOpts): Promise<Uint8Array>;
 
     static unpack(packed: Uint8Array, password?: string): Promise<PrivateKey>;
-    static generate(CreateKeysOpts): Promise<PrivateKey>;
+    static generate(options: CreateKeysOpts): Promise<PrivateKey>;
   }
 
   export interface PublicKeyEncryptOpts {

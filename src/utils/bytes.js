@@ -5,20 +5,6 @@ const randomBytes = require('randombytes');
 
 const { BigInteger } = jsbn;
 
-// var window = window || {};
-// var TextEncoder = TextEncoder || null;
-// var TextDecoder = TextDecoder || null;
-
-// // nodejs polyfill
-// if (!window.TextDecoder || !window.TextEncoder) {
-//   const polyfill = require("fastestsmallesttextencoderdecoder");
-//   // var window = window || {};
-//   window.TextEncoder = polyfill.TextEncoder;
-//   TextEncoder = polyfill.TextEncoder;
-//   window.TextDecoder = polyfill.TextDecoder;
-//   TextDecoder = polyfill.TextDecoder;
-// }
-
 const hexToBytes = (hexString) => Uint8Array.from(Buffer.from(hexString, 'hex'));
 const bytesToHex = (data) => Buffer.from(data).toString('hex');
 

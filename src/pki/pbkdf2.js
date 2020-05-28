@@ -1,6 +1,6 @@
 var Module = Module || require('../vendor/wasm/wrapper');
 
-const SHA = require('../hash/SHA');
+const SHA = require('../hash/sha');
 
 module.exports = derive;
 

@@ -8,7 +8,7 @@ function copyWASM(destination) {
 }
 
 distPaths.map(path => {
-  const relative = './' + path;
+  const relative = '../../' + path;
   if (fs.existsSync(relative)) {
     if (path === "public") {
       const jsPath = relative + '/js';

@@ -1,13 +1,14 @@
 {
   "name": "universa-wasm",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "Minimalistic Javascript library required to perform basic operations with Universa smart contracts and other objects. WASM version",
   "main": "index.js",
   "types": "./types.d.ts",
   "scripts": {
     "test": "mocha",
     "coverage": "nyc npm test",
-    "build": "node ./build.js"
+    "build": "node ./build.js",
+    "postinstall": "node ./postinstall.js"
   },
   "keywords": [
     "crypt",
@@ -33,6 +34,7 @@
   "dependencies": {
     "buffer": "^5.4.2",
     "fastestsmallesttextencoderdecoder": "^1.0.14",
+    "gently-copy": "^3.2.0",
     "jsbn": "^1.1.0",
     "randombytes": "^2.1.0"
   }

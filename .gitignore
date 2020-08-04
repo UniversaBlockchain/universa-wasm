@@ -10,3 +10,4 @@ vendor/*
 !vendor/forge.js
 .DS_Store
 .nyc_output/
+package-lock.json
